@@ -3,7 +3,7 @@ import { getCurrentWeather } from "./weather-helper-functions.js";
 
 import { findWeatherImg } from "./image-helper-functions.js";
 
-// Update Main JS to create a card using input from location field
+// Create a card using input from location field
 document.getElementById("input_container").addEventListener("submit", (evt) => {
   evt.preventDefault();
 
@@ -15,25 +15,28 @@ document.getElementById("input_container").addEventListener("submit", (evt) => {
 
   //to create a card under id"card_container" to contain the display section.
   const card = document.createElement("div"); //card_container=>card & img; card=>(location, tem)
+  card.setAttribute("class", "card");
   card_container.appendChild(card);
 
   //create location display
   const locationDisplay = document.createElement("h5");
-  card.appendChild(locationDisplay);
-  locationDisplay.setAttribute("id", "location_display");
+  locationDisplay.setAttribute("class", "card-title");
   // locationDisplay.innerText=  TODO
+  card.appendChild(locationDisplay);
 
   const tempDisplay = document.createElement("h6");
+  tempDisplay.setAttribute("class", "card-subtitle mb-2 text-muted");
+  // tempDisplay.innerText=  TODO
   card.appendChild(tempDisplay);
-  tempDisplay.setAttribute("id", "temperature_display");
 
   const weaConDisplay = document.createElement("p");
+  weaConDisplay.setAttribute("class", "card-text");
+  // weaConDisplay.innerText=  TODO
   card.appendChild(weaConDisplay);
-  weaConDisplay.setAttribute("id", "weather_condition_display");
 
   const imgDisplay = document.createElement("img");
-  card_container.appendChild(imgDisplay);
-  imgDisplay.setAttribute("src", ""); //TODO
+  imgDisplay.setAttribute("class", "card-img-top");
   imgDisplay.setAttribute("id", "image");
+  card_container.appendChild(imgDisplay);
   // findWeatherImg(); //TODO
 });
