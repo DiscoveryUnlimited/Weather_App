@@ -59,7 +59,7 @@ async function getCurrentWeatherCityName(cityName) {
     return weather; 
 }
 
-async function getCurrentWeatherLatLon(latitude, longitude) {
+export async function getCurrentWeatherLatLon(latitude, longitude) {
 
     const API_URL = `https://api.weatherbit.io/v2.0/current?&lat=${latitude}&lon=${longitude}&key=0632122ec59f467cb1b46c3567c0b3b0`;
 
