@@ -75,3 +75,41 @@ export async function getCurrentWeatherLatLon(latitude, longitude) {
 
 }
 
+export async function getSevenDayForecast({ latitude, longitude, postalCode, cityName }) {
+
+    if(latitude && longitude) {
+        let url = `https://api.weatherbit.io/v2.0/forecast/daily?&lat=${latitude}&lon=${longitude}&key=0632122ec59f467cb1b46c3567c0b3b0`;
+
+        console.log('Call seven day forecast with lat and lon');
+
+    } else if (postalCode) {
+        let url = `https://api.weatherbit.io/v2.0/forecast/daily?postal_code=${postalCode}&key=0632122ec59f467cb1b46c3567c0b3b0`;
+
+
+        console.log('Call seven day forecast with postal code'); 
+
+    } else if (cityName) {
+        let url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityName}&key=0632122ec59f467cb1b46c3567c0b3b0`;
+
+        console.log('Call seven day forecast with city name');
+
+    } else{
+        console.log("Error: Invalid input!");
+    }
+
+
+
+
+
+}
+
+
+/*
+    const newDestElt = elementFactory({
+        text: destination, 
+        parentElt: cardBody, 
+        classNames: ["card-title"], 
+        eltType: "h5"
+    });
+
+*/
