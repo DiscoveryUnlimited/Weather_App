@@ -77,6 +77,8 @@ export async function getCurrentWeatherLatLon(latitude, longitude) {
 
 export async function getSevenDayForecast({ latitude, longitude, postalCode, cityName }) {
 
+    let weather_arr = [];
+
     if(latitude && longitude) {
         let url = `https://api.weatherbit.io/v2.0/forecast/daily?&lat=${latitude}&lon=${longitude}&key=0632122ec59f467cb1b46c3567c0b3b0`;
 
@@ -84,7 +86,6 @@ export async function getSevenDayForecast({ latitude, longitude, postalCode, cit
 
     } else if (postalCode) {
         let url = `https://api.weatherbit.io/v2.0/forecast/daily?postal_code=${postalCode}&key=0632122ec59f467cb1b46c3567c0b3b0`;
-
 
         console.log('Call seven day forecast with postal code'); 
 
@@ -94,22 +95,24 @@ export async function getSevenDayForecast({ latitude, longitude, postalCode, cit
         console.log('Call seven day forecast with city name');
 
     } else{
+        // If we don't get a valid argument then log an error and return an empty array
         console.log("Error: Invalid input!");
+        return weather_arr; 
     }
 
+    // Call the weather API
+    const response = await fetch(url);
 
+    // Convert response into a JSON object
+    const weather = await response.json(); 
+    console.log(weather.data);
 
+    // If the array is greater than seven, grab the first seven elements
+    if(weather.data.length > 7) {
+        weather_arr = [...weather.data.slice(0,7)];
+        console.log(weather_arr);
+    }
 
-
+    // Return our weather array
+    return weather_arr; 
 }
-
-
-/*
-    const newDestElt = elementFactory({
-        text: destination, 
-        parentElt: cardBody, 
-        classNames: ["card-title"], 
-        eltType: "h5"
-    });
-
-*/
