@@ -1,6 +1,6 @@
 
 
-
+const WEATHER_KEY = "59ce29faace24f609ceb1d6afcca5556";
 
 export function testWeatherFunctions() {
     let inputData = prompt("Enter a zip or city name (e.g. Dallas,Tx):");
@@ -58,7 +58,7 @@ async function getCurrentWeatherZip(postalCode) {
 
     console.log('Zip method');
 
-    const API_URL = `https://api.weatherbit.io/v2.0/current?&postal_code=${postalCode}&key=0632122ec59f467cb1b46c3567c0b3b0`;
+    const API_URL = `https://api.weatherbit.io/v2.0/current?&postal_code=${postalCode}&key=${WEATHER_KEY}`;
 
     const response = await fetch(API_URL);
 
@@ -72,7 +72,7 @@ async function getCurrentWeatherZip(postalCode) {
 
 async function getCurrentWeatherCityName(cityName) {
 
-    const API_URL = `https://api.weatherbit.io/v2.0/current?&city=${cityName}&key=0632122ec59f467cb1b46c3567c0b3b0`;
+    const API_URL = `https://api.weatherbit.io/v2.0/current?&city=${cityName}&key=${WEATHER_KEY}`;
 
     const response = await fetch(API_URL);
 
@@ -87,7 +87,7 @@ async function getCurrentWeatherCityName(cityName) {
 
 export async function getCurrentWeatherLatLon(latitude, longitude) {
 
-    const API_URL = `https://api.weatherbit.io/v2.0/current?&lat=${latitude}&lon=${longitude}&key=0632122ec59f467cb1b46c3567c0b3b0`;
+    const API_URL = `https://api.weatherbit.io/v2.0/current?&lat=${latitude}&lon=${longitude}&key=${WEATHER_KEY}`;
 
     const response = await fetch(API_URL);
 
@@ -107,7 +107,7 @@ export async function getSevenDayForecast({ latitude, longitude, postalCode, cit
 
     if(latitude && longitude) {
         // API call for lat and lon
-        let url = `https://api.weatherbit.io/v2.0/forecast/daily?&lat=${latitude}&lon=${longitude}&key=0632122ec59f467cb1b46c3567c0b3b0`;
+        let url = `https://api.weatherbit.io/v2.0/forecast/daily?&lat=${latitude}&lon=${longitude}&key=${WEATHER_KEY}`;
 
         console.log('Call seven day forecast with lat and lon');
             
@@ -127,7 +127,7 @@ export async function getSevenDayForecast({ latitude, longitude, postalCode, cit
 
     } else if (postalCode) {
         // API call for postal code
-        let url = `https://api.weatherbit.io/v2.0/forecast/daily?postal_code=${postalCode}&key=0632122ec59f467cb1b46c3567c0b3b0`;
+        let url = `https://api.weatherbit.io/v2.0/forecast/daily?postal_code=${postalCode}&key=${WEATHER_KEY}`;
 
         console.log('Call seven day forecast with postal code'); 
 
@@ -147,7 +147,7 @@ export async function getSevenDayForecast({ latitude, longitude, postalCode, cit
 
     } else if (cityName) {
         // API call for city name
-        let url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityName}&key=0632122ec59f467cb1b46c3567c0b3b0`;
+        let url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityName}&key=${WEATHER_KEY}`;
 
         console.log('Call seven day forecast with city name');
 
