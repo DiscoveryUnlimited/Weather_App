@@ -12,16 +12,21 @@ export function testGetWeatherIconFunction(weatherCode) {
     // const CLEAR_SKY_URL = getWeatherIcon("800");
     // console.log(CLEAR_SKY_URL);
     
-    const cardBody = document.getElementById("card-title")
-    cardBody.classList.add("d-flex", "justify-content-between"); 
+    const cardTitle = document.getElementById("card-title")
+    cardTitle.classList.add("d-flex", "justify-content-between"); 
     const imgDisplay = document.createElement("img");
     imgDisplay.setAttribute("height", "50px");
     imgDisplay.setAttribute("width", "50px");
     imgDisplay.setAttribute("id", "weather_icon");
     imgDisplay.setAttribute("src", WEATHER_ICON_URL);
-    cardBody.appendChild(imgDisplay);
+    cardTitle.appendChild(imgDisplay);
 
 }
+
+// --- Example of adding weather icon to card 
+// const weather_code = weather.data[0].weather.code.toString(); 
+// console.log(`Weather code: ${weather_code}`);
+// testGetWeatherIconFunction(weather_code); 
 
 
 /* 
