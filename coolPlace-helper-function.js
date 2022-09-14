@@ -11,6 +11,7 @@ export async function findCoolCoffeeNearBy(locationInput) {
 
   const fourSquareUrl =
     "https://api.foursquare.com/v3/places/search?query=coffee&near=${locationInput}&sort=RATING";
+
   //console.log("hi, it is working");
   const response = await fetch(fourSquareUrl, options);
   const data = await response.json();
