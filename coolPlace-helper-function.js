@@ -1,5 +1,6 @@
-export { findCoolPlaceNearBy };
-async function findCoolPlaceNearBy() {
+export async function findCoolCoffeeNearBy(locationInput) {
+  //console.log("hi");
+
   const options = {
     method: "GET",
     headers: {
@@ -9,10 +10,17 @@ async function findCoolPlaceNearBy() {
   };
 
   const fourSquareUrl =
-    "https://api.foursquare.com/v3/places/search?query=coffee&near=cary&sort=RATING";
-console.log("hi, it is working");
+    "https://api.foursquare.com/v3/places/search?query=coffee&near=${locationInput}&sort=RATING";
+  //console.log("hi, it is working");
   const response = await fetch(fourSquareUrl, options);
   const data = await response.json();
-  const coolPlace = data.results.
-  console.log(coolPlace);
+  return data;
+  const coolPlaceName = data.name;
+  const coolPlaceAddress = data.location.formatted_address;
+  const result = coolPlaceName + " in " + coolPlaceAddress;
+  console.log(coolPlaceName);
+  console.log(coolPlaceAddress);
+  return result;
 }
+
+
