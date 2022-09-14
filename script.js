@@ -79,6 +79,7 @@ document
     //location. temperature, weather condition, weather condition img.
     //grab user inputs(location) from the input_container, and store it in variables.
     let locationInput = document.getElementById("user_input").value;
+    //if user didn't input anything, but click search button. it will use the default zip code.
     if (locationInput.length === 0) {
       locationInput = defaultZipCode;
     }
