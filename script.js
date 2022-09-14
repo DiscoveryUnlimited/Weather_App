@@ -3,6 +3,7 @@ import { getCurrentWeather, getCurrentWeatherLatLon, testForecastFunction, getSe
 import { findWeatherImg } from "./image-helper-functions.js";
 import { getCurrentNews } from "./newsfeed-helper-functions.js";
 import { getWeatherIcon } from "./weather-icons-helper.js";
+import{ findCoolCoffeeNearBy } from "./coffeeStore-helper-function.js";
 
 // Default background image
 const defaultImg =
@@ -98,7 +99,7 @@ async function success(pos) {
   iconImg.setAttribute("src", iconUrl);
   document.getElementById("card-title").appendChild(iconImg);
   
-  // Create card
+  // Create news card
   const newsCard = document.createElement("div");
   newsCard.setAttribute("class", "card");
   newsCard.setAttribute("id", "newsCard")
@@ -117,7 +118,7 @@ async function success(pos) {
   // Create news title
   const newsTitile = document.createElement("h5");
   newsTitile.setAttribute("class", "card-title");
-  newsTitile.setAttribute("id", "card-title");
+  newsTitile.setAttribute("id", "news-card-title");
   newsTitile.innerText = "Local News";
   document.getElementById("news-card-body").appendChild(newsTitile);
 
@@ -128,6 +129,37 @@ async function success(pos) {
   newsText.setAttribute("id", "news-text"); 
   newsText.innerText = news;
   document.getElementById("news-card-body").appendChild(newsText);
+
+  // Create coffee card
+  const coffeeCard = document.createElement("div");
+  coffeeCard.setAttribute("class", "card");
+  coffeeCard.setAttribute("id", "coffeeCard")
+  coffeeCard.setAttribute("style", "margin-top: 15px; margin-bottom: 15px; background-color: #faf1f1;");
+  coffeeCard.style.height = "fit-content";
+  coffeeCard.style.margin = "15px;";
+  document.getElementById("card_container").appendChild(coffeeCard);
+
+  // Create coffee card body
+  const coffeeCardBody = document.createElement("div");
+  coffeeCardBody.setAttribute("class", "card-body");
+  coffeeCardBody.setAttribute("id", "coffee-card-body");
+  coffeeCard.appendChild(coffeeCardBody);
+
+  // Create coffee title
+  const coffeeTitle = document.createElement("h5");
+  coffeeTitle.setAttribute("class", "card-title");
+  coffeeTitle.setAttribute("id", "coffee-card-title");
+  coffeeTitle.innerText = "Best Local Coffee";
+  document.getElementById("coffee-card-body").appendChild(coffeeTitle);
+
+
+  // Coffee
+  let coffee = await findCoolCoffeeNearBy(locationInput);
+  const coffeeText = document.createElement("p");
+  coffeeText.setAttribute("class", "card-text");
+  coffeeText.setAttribute("id", "coffee-text"); 
+  coffeeText.innerText = coffee;
+  document.getElementById("coffee-card-body").appendChild(coffeeText);
 }
 
 
@@ -214,6 +246,7 @@ async function forecast(){
       iconImg.setAttribute("id", iconID);
       iconImg.setAttribute("src", iconUrl);
       document.getElementById(dateID).appendChild(iconImg);
+      
     }
   }
   else{
@@ -290,6 +323,10 @@ let locationInput = document.getElementById("user_input").value;
     // News
     let news = await getCurrentNews(locationName);
     document.getElementById("news-text").innerText = news;
+
+    // Coffee
+    let coffee = await findCoolCoffeeNearBy(locationName);
+    document.getElementById("coffee-text").innerText = coffee;
 
     // Reset input field
     document.getElementById("search_bar").reset();
