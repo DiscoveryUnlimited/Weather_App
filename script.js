@@ -6,8 +6,8 @@ import { findWeatherImg } from "./image-helper-functions.js";
 const defaultImg =
   "https://images.unsplash.com/photo-1516912481808-3406841bd33c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1344&q=80";
 
-//const defaultZipCode = 27519;
-const locationInput = 27519;
+const defaultZipCode = 27519;
+const locationInput = defaultZipCode;
 // Weather call
 let weather = await getCurrentWeather(locationInput);
 
@@ -33,7 +33,7 @@ card.appendChild(cardBody);
 const temperature = weather.data[0].temp;
 const tempDisplay = document.createElement("h6");
 tempDisplay.setAttribute("class", "card-subtitle mb-2 text-muted");
-// TODO
+tempDisplay.setAttribute("id", "card-subtitle"); // TODO
 tempDisplay.innerText = temperature;
 cardBody.appendChild(tempDisplay);
 console.log(temperature);
@@ -41,7 +41,7 @@ console.log(temperature);
 const condition = weather.data[0].weather.description;
 const weaConDisplay = document.createElement("p");
 weaConDisplay.setAttribute("class", "card-text");
-// TODO
+weaConDisplay.setAttribute("id", "card-text"); // TODO
 weaConDisplay.innerText = condition;
 cardBody.appendChild(weaConDisplay);
 
@@ -79,7 +79,10 @@ document
     //location. temperature, weather condition, weather condition img.
     //grab user inputs(location) from the input_container, and store it in variables.
     let locationInput = document.getElementById("user_input").value;
-    console.log(locationInput);
+    if (locationInput.length === 0) {
+      locationInput = defaultZipCode;
+    }
+    //console.log(locationInput.length);
     // Weather call
     let weather = await getCurrentWeather(locationInput); //TODO
 
@@ -89,13 +92,13 @@ document
 
     //Temperature Display
     let temperature = weather.data[0].temp;
-    document.getElementsByClassName("card-subtitle").innerText = temperature;
+    document.getElementById("card-subtitle").innerText = temperature;
     //console.log(temperature);
-    tempDisplay.innerText = temperature;
+    //tempDisplay.innerText = temperature;
     //Weather Condition
     let condition = weather.data[0].weather.description;
     //weaConDisplay.innerText = condition;
-    document.getElementsByClassName("card-text").innerText = condition;
+    //document.getElementById("card-text").innerText = condition;
     weaConDisplay.innerText = condition;
     //searchable condition and update image
     var words = condition.split(" ");
