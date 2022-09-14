@@ -9,7 +9,7 @@ const defaultImg =
 const defaultZipCode = 27519;
 const locationInput = defaultZipCode;
 // Weather call
-let weather = await getCurrentWeather(locationInput); //TODO
+let weather = await getCurrentWeather(locationInput);
 
 //to create a card under id"card_container" to contain the display section.
 const card = document.createElement("div"); //card_container=>card & img; card=>(location, tem)
@@ -27,20 +27,21 @@ locationDisplay.setAttribute("class", "card-title");
 locationDisplay.setAttribute("id", "card-title");
 locationDisplay.innerText = locationInput;
 cardBody.appendChild(locationDisplay);
+card.appendChild(cardBody);
 
 //Temperature Display
 const temperature = weather.data[0].temp;
 const tempDisplay = document.createElement("h6");
 tempDisplay.setAttribute("class", "card-subtitle mb-2 text-muted");
-// TODO
+tempDisplay.setAttribute("id", "card-subtitle"); // TODO
 tempDisplay.innerText = temperature;
 cardBody.appendChild(tempDisplay);
-
+console.log(temperature);
 //Weather Condition
 const condition = weather.data[0].weather.description;
 const weaConDisplay = document.createElement("p");
 weaConDisplay.setAttribute("class", "card-text");
-// TODO
+weaConDisplay.setAttribute("id", "card-text"); // TODO
 weaConDisplay.innerText = condition;
 cardBody.appendChild(weaConDisplay);
 
@@ -52,12 +53,12 @@ cardBody.appendChild(imgDisplay);
 
 //searchable condition and update image
 var words = condition.split(" ");
-console.log(words.length);
+//console.log(words.length);
 if (words.length > 1) {
   var search = words[0];
-  console.log(search);
+  //console.log(search);
   for (var i = 1; i <= words.length - 1; i++) {
-    console.log(i);
+    //console.log(i);
     let word = words[i];
 
     let wordPlus = "+" + word;
@@ -66,8 +67,6 @@ if (words.length > 1) {
 
   findWeatherImg(search);
 }
-
-card.appendChild(cardBody);
 
 document.getElementById("card_container").appendChild(card);
 
@@ -80,7 +79,11 @@ document
     //location. temperature, weather condition, weather condition img.
     //grab user inputs(location) from the input_container, and store it in variables.
     let locationInput = document.getElementById("user_input").value;
-    console.log(locationInput);
+    //if user didn't input anything, but click search button. it will use the default zip code.
+    if (locationInput.length === 0) {
+      locationInput = defaultZipCode;
+    }
+    //console.log(locationInput.length);
     // Weather call
     let weather = await getCurrentWeather(locationInput); //TODO
 
@@ -90,21 +93,22 @@ document
 
     //Temperature Display
     let temperature = weather.data[0].temp;
-    document.getElementsByClassName("card-subtitle").innerText = temperature;
-
+    document.getElementById("card-subtitle").innerText = temperature;
+    //console.log(temperature);
+    //tempDisplay.innerText = temperature;
     //Weather Condition
     let condition = weather.data[0].weather.description;
     //weaConDisplay.innerText = condition;
-    document.getElementsByClassName("card-text").innerText = condition;
-
+    //document.getElementById("card-text").innerText = condition;
+    weaConDisplay.innerText = condition;
     //searchable condition and update image
     var words = condition.split(" ");
     console.log(words.length);
     if (words.length > 1) {
       var search = words[0];
-      console.log(search);
+      //console.log(search);
       for (var i = 1; i <= words.length - 1; i++) {
-        console.log(i);
+        //console.log(i);
         let word = words[i];
 
         let wordPlus = "+" + word;
