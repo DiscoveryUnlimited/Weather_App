@@ -1,18 +1,32 @@
 
-
+/* 
+    This function takes a weather icon code and returns 
+    a url to the image of the weather icon.
+*/
 export function getWeatherIcon(iconCode) {
 
-
     // Set our icon code to a default of a sun and cloud
-    let iconCode = "https://www.weatherbit.io/static/img/icons/c02d.png"; 
-    
-    
+    let iconURL = "https://www.weatherbit.io/static/img/icons/c02d.png"; 
 
+    // Get our icon map 
+    const iconMap = createWeatherCodeMap(); 
 
+    // Check if our icon code is included in our map
+    if(iconCode in iconMap) {
+        iconURL = iconMap.get(iconCode); 
+    } else {
+        // If we get an invalid code, then log it to console for troubleshooting
+        console.log(`Error: ${iconCode} is an invalid icon code`);
+    }
+    // Return the icon URL
+    return iconURL; 
 }
 
 
-
+/*
+    This function creates a map with icon codes as the key 
+    and a URL as the value.
+*/
 function createWeatherCodeMap(){
 
     // Create our hashmap linking codes to their image url
