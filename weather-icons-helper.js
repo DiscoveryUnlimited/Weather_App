@@ -1,24 +1,24 @@
 
 
 
-export function testGetWeatherIconFunction() {
+export function testGetWeatherIconFunction(weatherCode) {
 
     debugger; 
 
-    const DEFAULT_URL = getWeatherIcon('000'); 
-    console.log(DEFAULT_URL);
-    const THUNDERSTORM_URL = getWeatherIcon('200');
-    console.log(THUNDERSTORM_URL);
-    const CLEAR_SKY_URL = getWeatherIcon('800');
-    console.log(CLEAR_SKY_URL);
+    const WEATHER_ICON_URL = getWeatherIcon(weatherCode); 
+    console.log(`Weather icon url: ${WEATHER_ICON_URL}`);
+    // const THUNDERSTORM_URL = getWeatherIcon("200");
+    // console.log(THUNDERSTORM_URL);
+    // const CLEAR_SKY_URL = getWeatherIcon("800");
+    // console.log(CLEAR_SKY_URL);
     
-    const cardBody = document.getElementById("card_container")
+    const cardBody = document.getElementById("card-title")
+    cardBody.classList.add("d-flex", "justify-content-between"); 
     const imgDisplay = document.createElement("img");
-    imgDisplay.setAttribute("height", "50");
-    imgDisplay.setAttribute("width", "50");
-    imgDisplay.setAttribute("class", "card-img-top");
+    imgDisplay.setAttribute("height", "50px");
+    imgDisplay.setAttribute("width", "50px");
     imgDisplay.setAttribute("id", "weather_icon");
-    imgDisplay.setAttribute("src", DEFAULT_URL);
+    imgDisplay.setAttribute("src", WEATHER_ICON_URL);
     cardBody.appendChild(imgDisplay);
 
 }
@@ -37,7 +37,7 @@ export function getWeatherIcon(iconCode) {
     const iconMap = createWeatherCodeMap(); 
 
     // Check if our icon code is included in our map
-    if(iconCode in iconMap) {
+    if(iconMap.has(iconCode)) {
         iconURL = iconMap.get(iconCode); 
     } else {
         // If we get an invalid code, then log it to console for troubleshooting
