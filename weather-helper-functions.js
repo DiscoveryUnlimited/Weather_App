@@ -165,7 +165,7 @@ export async function getSevenDayForecast({ latitude, longitude, postalCode, cit
             console.log(weather_arr);
         }
 
-    } else{
+    } else {
         // If we don't get a valid argument then log an error and return an empty array
         console.log("Error: Invalid input!");
         return weather_arr; 
