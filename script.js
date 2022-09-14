@@ -1,5 +1,5 @@
 //  Establish import for weather and image functions
-import { getCurrentWeather, getCurrentWeatherLatLon } from "./weather-helper-functions.js";
+import { getCurrentWeather, getCurrentWeatherLatLon, testForecastFunction, getSevenDayForecast} from "./weather-helper-functions.js";
 import { findWeatherImg } from "./image-helper-functions.js";
 import { getCurrentNews } from "./newsfeed-helper-functions.js";
 
@@ -23,6 +23,7 @@ async function success(pos) {
   // Create card
   const card = document.createElement("div");
   card.setAttribute("class", "card");
+  card.setAttribute("id", "weather-card");
   card.setAttribute("style", "background-color: #faf1f1;");
   card.style.height = "fit-content";
   card.style.margin = "15px;";
@@ -60,33 +61,30 @@ async function success(pos) {
   imgDisplay.setAttribute("class", "card-img-top");
   imgDisplay.setAttribute("id", "image");
   imgDisplay.setAttribute("src", defaultImg);
-  cardBody.appendChild(imgDisplay);
+  
 
   //searchable condition and update image
   var words = condition.split(" ");
-  //console.log(words.length);
-  if (words.length > 1) {
-    var search = words[0];
-    //console.log(search);
-    for (var i = 1; i <= words.length - 1; i++) {
-      //console.log(i);
-      let word = words[i];
+  var search = words[0];
 
-      let wordPlus = "+" + word;
-      search += wordPlus;
-    }
+  
+  for (var i = 1; i <= words.length - 1; i++) {
+    //console.log(i);
+    let word = words[i];
 
-    findWeatherImg(search);
+    let wordPlus = "+" + word;
+    search += wordPlus;
   }
+  let photo = await findWeatherImg(search);
+  imgDisplay.setAttribute("src", photo);
+
+  
+  
+
+  cardBody.appendChild(imgDisplay);
 
   document.getElementById("card_container").appendChild(card);
 
-
-  // Create news container
-  // const newsContainer = document.createElement("div");
-  // newsContainer.setAttribute("id", "news_container")
-  // newsContainer.setAttribute("style", "padding: 15px; min-width: 40%; margin-top: 20px;");
-  // document.body.children[1].appendChild(newsContainer);
   
   // Create card
   const newsCard = document.createElement("div");
@@ -121,16 +119,69 @@ async function success(pos) {
 }
 
 
-// Update weather card using input
+// Forecast
 document.getElementById('flexSwitchCheckDefault').addEventListener("change", forecast);
 
 async function forecast(){
-  let locationInput = document.getElementById("card-title").value;
+  var locationInput = document.getElementById("card-title").innerText;
+  
+  for (let j = 1; j <=3; j++) {
+    console.log(j);
 
-  let weather = await getCurrentWeather(locationInput);
-  let locationName = weather.data[0].city_name;
+    let weather = await getSevenDayForecast({ cityName: locationInput });
 
+    let card = document.getElementById("weather-card");
 
+    // Create card body
+    const cardBody = document.createElement("div");
+    cardBody.setAttribute("class", "card-body");
+    card.appendChild(cardBody);
+
+    // Date Display
+    let date = weather[j].datetime;
+    const dateDisplay = document.createElement("h5");
+    dateDisplay.setAttribute("class", "card-title");
+    dateDisplay.innerText = date;
+    cardBody.appendChild(dateDisplay);
+
+    // Temperature Display
+    const temperature = (((weather[j].high_temp)* (9/3))+ 32).toFixed(2);
+    const tempDisplay = document.createElement("h6");
+    tempDisplay.setAttribute("class", "card-subtitle mb-2 text-muted");
+    tempDisplay.innerText = "Highs: " + temperature + " °F";
+    cardBody.appendChild(tempDisplay);
+
+    // Weather Condition
+    const condition = weather[j].weather.description;
+    const weaConDisplay = document.createElement("p");
+    weaConDisplay.setAttribute("class", "card-text");
+    weaConDisplay.innerText = condition;
+    cardBody.appendChild(weaConDisplay);
+
+    // Image
+    let imageID = "image" + j.toString();
+    console.log("ID: " + imageID);
+    const imgDisplay = document.createElement("img");
+    imgDisplay.setAttribute("class", "card-img-top");
+    imgDisplay.setAttribute("id", imageID);
+    imgDisplay.setAttribute("src", defaultImg);
+    cardBody.appendChild(imgDisplay);
+
+    //searchable condition and update image
+    var words = condition.split(" ");
+    var search = words[0];
+
+    for (var i = 1; i <= words.length - 1; i++) {
+      //console.log(i);
+      let word = words[i];
+
+      let wordPlus = "+" + word;
+      search += wordPlus;
+    }
+    
+    let photo = await findWeatherImg(search);
+    document.getElementById(imageID).setAttribute("src", photo);
+  }
 }
 
 
@@ -158,23 +209,22 @@ let locationInput = document.getElementById("user_input").value;
     let condition = weather.data[0].weather.description;
     document.getElementById("card-text").innerText = condition;
 
-    // Searchable condition
+    //searchable condition and update image
     var words = condition.split(" ");
-    console.log(words.length);
-    if (words.length > 1) {
-      var search = words[0];
-      //console.log(search);
-      for (var i = 1; i <= words.length - 1; i++) {
-        //console.log(i);
-        let word = words[i];
+    //console.log(words.length);
+    
+    var search = words[0];
+    //console.log(search);
+    for (var i = 1; i <= words.length - 1; i++) {
+      //console.log(i);
+      let word = words[i];
 
-        let wordPlus = "+" + word;
-        search += wordPlus;
-      }
-      // Update Image
-      findWeatherImg(search);
+      let wordPlus = "+" + word;
+      search += wordPlus;
     }
-
+    let photo = await findWeatherImg(search);
+    document.getElementById("image").setAttribute("src", photo);
+    
     // News
     let news = await getCurrentNews(locationName);
     document.getElementById("news-text").innerText = news;

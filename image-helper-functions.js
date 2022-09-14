@@ -10,7 +10,7 @@ async function findWeatherImg(weather){
     const photos = await data.results;
     
     var rand = Math.floor(Math.random() * (Object.keys(photos).length));
-    const imgUrl = photos[rand].urls.small;
+    const imgUrl = data.results[rand].urls.small;
 
-    document.getElementById("image").setAttribute("src", imgUrl);
+    return imgUrl
 }
