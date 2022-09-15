@@ -163,7 +163,7 @@ async function success(pos) {
   const coffeeTitle = document.createElement("h5");
   coffeeTitle.setAttribute("class", "text-center card-title");
   coffeeTitle.setAttribute("id", "coffee-card-title");
-  coffeeTitle.innerText = "Best Local Coffee";
+  coffeeTitle.innerText = "Local Coffee";
   document.getElementById("coffee-card-body").appendChild(coffeeTitle);
 
   // Coffee
