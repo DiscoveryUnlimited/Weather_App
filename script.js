@@ -345,7 +345,23 @@ document
       // Coffee
       let coffee = await findCoolCoffeeNearBy(locationName);
       document.getElementById("coffee-text").innerText = coffee;
+      
+      //forecast check
+      let checkBox = document.getElementById("flexSwitchCheckDefault");
+      if (checkBox.checked) {
+        for (let j = 1; j <= 3; j++) {
+          const removeElement = document.getElementById("weather-card").lastChild;
 
+          while (removeElement.firstChild) {
+            removeElement.lastChild.remove();
+          }
+
+          removeElement.remove();
+        }
+      
+        forecast();
+      }
+      
       // Reset input field
       document.getElementById("search_bar").reset();
     }
