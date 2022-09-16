@@ -37,7 +37,7 @@ async function success(pos) {
   card.setAttribute("id", "weather-card");
   card.setAttribute(
     "style",
-    "display: flex; flex-direction: row; align-content: center; background-color:#001D6E; color:white"
+    "display: flex; flex-direction: row; flex-wrap: wrap; align-content: center; background-color:#001D6E; color:white"
   );
   card.style.height = "fit-content";
   card.style.margin = "15px;";
@@ -345,12 +345,13 @@ document
       // Coffee
       let coffee = await findCoolCoffeeNearBy(locationName);
       document.getElementById("coffee-text").innerText = coffee;
-      
+
       //forecast check
       let checkBox = document.getElementById("flexSwitchCheckDefault");
       if (checkBox.checked) {
         for (let j = 1; j <= 3; j++) {
-          const removeElement = document.getElementById("weather-card").lastChild;
+          const removeElement =
+            document.getElementById("weather-card").lastChild;
 
           while (removeElement.firstChild) {
             removeElement.lastChild.remove();
@@ -358,10 +359,10 @@ document
 
           removeElement.remove();
         }
-      
+
         forecast();
       }
-      
+
       // Reset input field
       document.getElementById("search_bar").reset();
     }
